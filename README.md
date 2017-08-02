@@ -93,9 +93,9 @@ $payload = Payment2C2P::paymentRequest([
          'cardholderName' => 'Card holder Name',
          'cardholderEmail' => 'email@emailcom',
          'panCountry' => 'SG',
-         'encCardData' => '00acTVJv57ro5hFbdoljZYQwQCldF4ICY3KjuPrYUU6xPKOLauwhEKFk8nbS2vxeb/gCd1X6LmoOL2x45tAuYYdxDBDepJ/L5waYInlOq6LGNu0bbmzHL+Z8d5ZdLfCYF0V7hoPMBMulOQCkzrjwLZqMLqf+r8JB1Lvt3DdQpLl4krg=U2FsdGVkX1+Yf+BLyP+F/fUGgi+ICP8nb2zWMmQKAoyUX3jp9Eua21dydi1Z8DOW',
-         'userDefined1' => 'Nyi Nyi Lwin',
-         'userDefined2' => 'Nyi Nyi Lwin#2'
+         'encCardData' => $request->input('encryptedCardInfo'), // Retrieve encrypted credit card data 
+         'userDefined1' => 'userDefined1',
+         'userDefined2' => 'userDefined2'
      ]);
 ```
 
