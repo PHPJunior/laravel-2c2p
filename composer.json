@@ -1,0 +1,28 @@
+{
+    "name": "php-junior/laravel-2c2p",
+    "description": "2C2P Payment Gateway Api & 123 API",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "2c2p",
+        "payment",
+        "123service",
+        "master",
+        "visa"
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "type": "library",
+    "authors": [
+        {
+            "name": "Nyi Nyi Lwin",
+            "email": "nyinyilwin1992@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PhpJunior\\Laravel2C2P\\": "src/"
+        }
+    }
+}
