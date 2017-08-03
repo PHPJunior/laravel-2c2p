@@ -85,7 +85,7 @@ Submit the request your back end code will receives the encrypted credit card de
 ##### Preparation 
 
 ```php
-$payload = Payment2C2P::paymentRequest([
+$payload = \Payment2C2P::paymentRequest([
          'desc' => '1 room for 2 nights',
          'uniqueTransactionCode' => "Invoice".time(),
          'amt' => '1000000',
@@ -117,7 +117,7 @@ Submit the Payment Request:
 #### Processing the response
 
 ```php
-   $response = Payment2C2P::getData($request->get('paymentResponse'))
+   $response = \Payment2C2P::getData($request->get('paymentResponse'))
    
    dd($response)
 ```
@@ -125,7 +125,7 @@ Submit the Payment Request:
 #### Payment Request [ Using 123 API ]
 
 ```php
-$onwTwoThreeReq = Payment2C2P::OneTwoThreeRequest([
+$onwTwoThreeReq = \Payment2C2P::OneTwoThreeRequest([
        'MessageID' => '222222',
        'InvoiceNo' => 'QW232142',
        'Amount'    => 24444,
@@ -170,7 +170,7 @@ Submit the Payment Request:
 #### Processing the response
 
 ```php
-   $response = Payment2C2P::getData($request->get('OneTwoThreeRes'))
+   $response = \Payment2C2P::getData($request->get('OneTwoThreeRes'))
    
    dd($response)
 ```
