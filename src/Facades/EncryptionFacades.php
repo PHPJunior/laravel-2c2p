@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nyinyilwin
- * Date: 8/1/17
- * Time: 3:47 PM
- */
 
 namespace PhpJunior\Laravel2C2P\Facades;
 
@@ -21,4 +15,5 @@ class EncryptionFacades extends Facade
     {
         return '2c2p-encryption';
     }
+
 }

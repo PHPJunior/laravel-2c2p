@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nyinyilwin
- * Date: 8/2/17
- * Time: 2:15 PM
- */
 
 namespace PhpJunior\Laravel2C2P\Api;
 
@@ -20,6 +14,7 @@ class PaymentGatewayApi
 
     /**
      * PaymentGatewayApi constructor.
+     *
      * @param $config
      * @param $encryption
      */
@@ -31,6 +26,7 @@ class PaymentGatewayApi
 
     /**
      * @param array $input
+     *
      * @return string
      */
     public function paymentRequest(array $input)
@@ -40,14 +36,14 @@ class PaymentGatewayApi
 
         $input['amt'] = $this->amount($input['amt']);
 
-        $stringToHash = $merchantID . $input['uniqueTransactionCode'] . $input['amt'];
+        $stringToHash = $merchantID.$input['uniqueTransactionCode'].$input['amt'];
         $xmlstring = '';
 
         foreach ($input as $key => $value) {
             $xmlstring .= '<'.$key.'>'.$value.'</'.$key.'>';
         }
 
-        $hash = strtoupper(hash_hmac('sha1', $stringToHash ,$secretKey, false));
+        $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));
 
         $xml = '<PaymentRequest><version>8.0</version><merchantID>'.$merchantID.'</merchantID>';
         $xml .= $xmlstring;
@@ -58,6 +54,7 @@ class PaymentGatewayApi
 
     /**
      * @param array $input
+     *
      * @return string
      */
     public function redirectRequest(array $input)
@@ -73,7 +70,8 @@ class PaymentGatewayApi
         $string .= '<input type="hidden" name="merchant_id" value="'.$merchantID.'">';
 
         $input['amount'] = $this->amount($input['amount']);
-        
+
+
         foreach ($input as $key => $value) {
             $strSignatureString .= $value;
             $string .= '<input type="hidden" name="'.$key.'" value="'.$value.'">';
@@ -87,6 +85,7 @@ class PaymentGatewayApi
 
     /**
      * @param array $input
+     *
      * @return mixed|string
      */
     public function OneTwoThreeRequest(array $input)
@@ -102,23 +101,26 @@ class PaymentGatewayApi
 
         $input['Amount'] = $this->amount($input['Amount']);
 
-        if (array_has($input,'Discount'))
+        if (array_has($input, 'Discount')) {
             $input['Discount'] = $this->amount($input['Discount']);
+        }
 
-        if (array_has($input,'ServiceFee'))
+        if (array_has($input, 'ServiceFee')) {
             $input['ServiceFee'] = $this->amount($input['ServiceFee']);
+        }
 
-        if (array_has($input,'ShippingFee'))
+        if (array_has($input, 'ShippingFee')) {
             $input['ShippingFee'] = $this->amount($input['ShippingFee']);
+        }
 
-        $stringToHash = $merchantID . $input['InvoiceNo'] . $input['Amount'];
+        $stringToHash = $merchantID.$input['InvoiceNo'].$input['Amount'];
         $xmlstring = '';
 
         foreach (array_except($input, ['PaymentItems']) as $key => $value) {
             $xmlstring .= '<'.$key.'>'.$value.'</'.$key.'>';
         }
 
-        $HashValue = urlencode(strtoupper(hash_hmac('sha1', $stringToHash ,$secretKey, false)));
+        $HashValue = urlencode(strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false)));
 
         $xml = '<OneTwoThreeReq>';
         $xml .= '<version>1.1</version>';
@@ -128,11 +130,11 @@ class PaymentGatewayApi
 
         $xml .= $xmlstring;
 
-        if (array_has( $input,'PaymentItems')){
+        if (array_has( $input, 'PaymentItems')){
             $paymentItems = '<PaymentItems>';
-            foreach ($input['PaymentItems'] as $paymentItem){
+            foreach ($input['PaymentItems'] as $paymentItem) {
                 $price = $this->amount($paymentItem['price']);
-                $paymentItems .="<PaymentItem id=\"$paymentItem[id]\" name=\"$paymentItem[name]\" price=\"$price\" quantity=\"$paymentItem[quantity]\" />";
+                $paymentItems .= "<PaymentItem id=\"$paymentItem[id]\" name=\"$paymentItem[name]\" price=\"$price\" quantity=\"$paymentItem[quantity]\" />";
             }
             $paymentItems .= '</PaymentItems>';
             $xml .= $paymentItems;
@@ -155,13 +157,14 @@ class PaymentGatewayApi
 <?xml version='1.0'?>
 $response
 XML;
-       return simplexml_load_string($string);
+        return simplexml_load_string($string);
     }
 
     private function amount($amount)
     {
-        $real_amount = sprintf("%.2f", $amount);
+        $real_amount = sprintf('%.2f', $amount);
         $amount = str_replace('.', '', $real_amount);
         return str_pad($amount, 12, '0', STR_PAD_LEFT);
     }
+
 }

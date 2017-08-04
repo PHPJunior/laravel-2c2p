@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nyinyilwin
- * Date: 8/1/17
- * Time: 7:24 PM
- */
 
 namespace PhpJunior\Laravel2C2P\Facades;
 
@@ -21,4 +15,5 @@ class Laravel2C2PFacades extends Facade
     {
         return '2c2p-payment-gateway-api';
     }
+
 }
