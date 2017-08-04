@@ -6,6 +6,8 @@
 
 Laravel 2C2P package
 
+## Laravel version 5.x.x
+
 ## Installation
 
 Install using composer:
