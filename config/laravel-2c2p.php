@@ -14,6 +14,8 @@ return [
     'private_key_path' => storage_path('cert/private.pem'),
     'public_key_path' => storage_path('cert/public.crt'),
 
+    'redirect_access_url' => 'https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment',
+
     'access_url' => 'https://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/PaymentAuth.aspx',
     'secure_pay_script' => 'https://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/api/my2c2p.1.6.9.min.js',
 

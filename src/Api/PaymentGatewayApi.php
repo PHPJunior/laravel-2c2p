@@ -58,6 +58,33 @@ class PaymentGatewayApi
 
     /**
      * @param array $input
+     * @return string
+     */
+    public function redirectRequest(array $input)
+    {
+        $secretKey = $this->config->get('laravel-2c2p.secret_key');
+        $merchantID = $this->config->get('laravel-2c2p.merchant_id');
+        $version = '6.2';
+
+        $strSignatureString = $version.$merchantID;
+
+        $string = '';
+        $string .= '<input type="hidden" name="version" value="'.$version.'">';
+        $string .= '<input type="hidden" name="merchant_id" value="'.$merchantID.'">';
+
+        foreach ($input as $key => $value) {
+            $strSignatureString .= $value;
+            $string .= '<input type="hidden" name="'.$key.'" value="'.$value.'">';
+        }
+
+        $HashValue = strtoupper(hash_hmac('sha1', $strSignatureString, $secretKey, false));
+        $string .= '<input type="hidden" name="hash_value" value="'.$HashValue.'">';
+
+        return $string;
+    }
+
+    /**
+     * @param array $input
      * @return mixed|string
      */
     public function OneTwoThreeRequest(array $input)

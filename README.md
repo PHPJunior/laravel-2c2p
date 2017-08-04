@@ -1,4 +1,4 @@
-# Laravel 2C2P Payment Gateway Api & 123 Api
+# Laravel 2C2P Redirect API , Payment Gateway Api & 123 Api
 
 [![Latest Stable Version](https://poser.pugx.org/php-junior/laravel-2c2p/v/stable)](https://packagist.org/packages/php-junior/laravel-2c2p)
 [![Total Downloads](https://poser.pugx.org/php-junior/laravel-2c2p/downloads)](https://packagist.org/packages/php-junior/laravel-2c2p)
@@ -21,7 +21,7 @@ PhpJunior\Laravel2C2P\Laravel2C2PServiceProvider::class,
 
 And 
 ```php 
-php artisan vendor:publish --provider="PhpJunior\Laravel2C2P\Laravel2C2PServiceProvider"
+php artisan vendor:publish --provider="PhpJunior\Laravel2C2P\Laravel2C2PServiceProvider" --force
 ```
 
 This is the contents of the published config file:
@@ -34,6 +34,8 @@ return [
     'private_key_pass' => '2c2p',
     'private_key_path' => storage_path('cert/private.pem'),
     'public_key_path' => storage_path('cert/public.crt'),
+
+    'redirect_access_url' => 'https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment',
 
     'access_url' => 'https://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/PaymentAuth.aspx',
     'secure_pay_script' => 'https://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/api/my2c2p.1.6.9.min.js',
@@ -98,8 +100,6 @@ $payload = \Payment2C2P::paymentRequest([
          'userDefined2' => 'userDefined2'
      ]);
 ```
-
-Find a list of all is available variables from [here](https://developer.2c2p.com/docs/api-variables).
 
 Submit the Payment Request:
 
@@ -174,6 +174,31 @@ Submit the Payment Request:
    
    dd($response)
 ```
+
+#### Payment Request [ Using Redirect API ]
+
+```php
+<form action="{{ config('laravel-2c2p.redirect_access_url') }}"  method="POST">
+    {!! \Payment2C2P::redirectRequest([
+            'payment_description' => '2 room 2 night',
+            'order_id' => 'QWERZX1234',
+            'invoice_no' => 'ZXCQW123',
+            'currency' => '840',
+            'amount' => '000001100010',
+            'customer_email' => 'nyi.nl@blueplanet.com.mm',
+            'result_url_1' => 'http://127.0.0.1:8888/payment/complete'
+    ]) !!}
+    <button type="submit">Submit</button>
+</form>
+```
+
+## Api Variables
+
+- Redirect Api variable from [here](https://developer.2c2p.com/docs/redirect-variables).
+- Payment Gateway Api variable from [here](https://developer.2c2p.com/docs/api-variables).
+- 123 Api from [here](https://developer.2c2p.com/docs/123-payments-123)
+
+## Full Documentation
 
 Read Full Documentation [here](https://developer.2c2p.com/docs)
 
