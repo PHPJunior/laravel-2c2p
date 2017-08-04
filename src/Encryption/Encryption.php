@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: nyinyilwin
  * Date: 8/1/17
- * Time: 7:22 PM
+ * Time: 7:22 PM.
  */
 
 namespace PhpJunior\Laravel2C2P\Encryption;
-
 
 class Encryption
 {
@@ -26,7 +25,7 @@ class Encryption
     public function pkcs7_123_encrypt($text)
     {
         if (!file_exists(storage_path('tmp/'))) {
-            mkdir( storage_path('tmp/') );
+            mkdir(storage_path('tmp/'));
         }
 
         $msg_file = storage_path('tmp/msg.txt');
@@ -44,16 +43,14 @@ Content-Transfer-Encoding: base64
         $key = file_get_contents($this->config->get('laravel-2c2p.123_public_key_path'));
 
         if (openssl_pkcs7_encrypt($msg_file, $enc_file, $key, [])) {
-
             $tempStr = file_get_contents($enc_file);
             $pos = strpos($tempStr, 'base64');
-            $tempStr = trim(substr($tempStr,$pos+6));
+            $tempStr = trim(substr($tempStr, $pos + 6));
 
-            return str_replace($strOri, '',$tempStr);
+            return str_replace($strOri, '', $tempStr);
         } else {
             return 'Cannot Encrypt';
         }
-
     }
 
     /**
@@ -86,10 +83,11 @@ Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7m"
 Content-Type: application/pkcs7-mime; smime-type=enveloped-data; name="smime.p7m"
 Content-Transfer-Encoding: base64
-', '', $contents );
+', '', $contents);
 
-            $contents = str_replace("\n", '',$contents);
+            $contents = str_replace("\n", '', $contents);
             unlink($filename_enc);
+
             return $contents;
         } else {
             unlink($filename);
@@ -97,7 +95,6 @@ Content-Transfer-Encoding: base64
             echo 'ENCRYPT FAIL';
             exit;
         }
-
     }
 
     public function pkcs7_decrypt($text)
@@ -119,7 +116,7 @@ Content-Transfer-Encoding: base64
         $text = rtrim($text, "\n");
 
         if (!file_exists(storage_path('tmp/'))) {
-            mkdir( storage_path('tmp/') );
+            mkdir(storage_path('tmp/'));
         }
 
         $in_file_name = storage_path('tmp/'.time().'.txt');
@@ -136,6 +133,7 @@ Content-Transfer-Encoding: base64
             unlink($in_file_name);
             $content = file_get_contents($out_file_name);
             unlink($out_file_name);
+
             return $content;
         } else {
             unlink($out_file_name);
@@ -143,7 +141,6 @@ Content-Transfer-Encoding: base64
             echo 'DECRYPT FAIL';
             exit;
         }
-        
     }
 
     private function text_to_file($text, $filename)

@@ -71,7 +71,6 @@ class PaymentGatewayApi
 
         $input['amount'] = $this->amount($input['amount']);
 
-
         foreach ($input as $key => $value) {
             $strSignatureString .= $value;
             $string .= '<input type="hidden" name="'.$key.'" value="'.$value.'">';
@@ -130,7 +129,7 @@ class PaymentGatewayApi
 
         $xml .= $xmlstring;
 
-        if (array_has( $input, 'PaymentItems')) {
+        if (array_has($input, 'PaymentItems')) {
             $paymentItems = '<PaymentItems>';
             foreach ($input['PaymentItems'] as $paymentItem) {
                 $price = $this->amount($paymentItem['price']);
@@ -168,5 +167,4 @@ XML;
 
         return str_pad($amount, 12, '0', STR_PAD_LEFT);
     }
-
 }
