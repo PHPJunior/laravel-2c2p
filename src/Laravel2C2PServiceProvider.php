@@ -18,7 +18,7 @@ class Laravel2C2PServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            $this->configPath() => config_path('laravel-2c2p.php'),
+            $this->configPath()      => config_path('laravel-2c2p.php'),
             $this->certificatePath() => storage_path('cert')
         ]);
     }
@@ -41,7 +41,7 @@ class Laravel2C2PServiceProvider extends ServiceProvider
      */
     protected function configPath()
     {
-        return __DIR__ . '/../config/laravel-2c2p.php';
+        return __DIR__.'/../config/laravel-2c2p.php';
     }
 
     /**
@@ -49,7 +49,7 @@ class Laravel2C2PServiceProvider extends ServiceProvider
      */
     protected function certificatePath()
     {
-        return __DIR__ . '/../storage/cert';
+        return __DIR__.'/../storage/cert';
     }
 
     private function registerFacade()
@@ -69,6 +69,7 @@ class Laravel2C2PServiceProvider extends ServiceProvider
     {
         $this->app->bind('2c2p-encryption', function ($app) {
             $config = $app['config'];
+
             return new Encryption($config);
         });
     }
@@ -78,7 +79,8 @@ class Laravel2C2PServiceProvider extends ServiceProvider
         $this->app->bind('2c2p-payment-gateway-api', function ($app) {
             $config = $app['config'];
             $encryption = $app['2c2p-encryption'];
-            return new PaymentGatewayApi($config , $encryption);
+
+            return new PaymentGatewayApi($config, $encryption);
         });
     }
 }

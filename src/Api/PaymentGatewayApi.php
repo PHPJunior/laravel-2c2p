@@ -130,7 +130,7 @@ class PaymentGatewayApi
 
         $xml .= $xmlstring;
 
-        if (array_has( $input, 'PaymentItems')){
+        if (array_has( $input, 'PaymentItems')) {
             $paymentItems = '<PaymentItems>';
             foreach ($input['PaymentItems'] as $paymentItem) {
                 $price = $this->amount($paymentItem['price']);
@@ -157,6 +157,7 @@ class PaymentGatewayApi
 <?xml version='1.0'?>
 $response
 XML;
+
         return simplexml_load_string($string);
     }
 
@@ -164,6 +165,7 @@ XML;
     {
         $real_amount = sprintf('%.2f', $amount);
         $amount = str_replace('.', '', $real_amount);
+
         return str_pad($amount, 12, '0', STR_PAD_LEFT);
     }
 

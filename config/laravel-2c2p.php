@@ -25,5 +25,5 @@ return [
     '123_channel_code'      => 'OVERTHECOUNTER',
     '123_merchant_url'      => 'merchant url',
     '123_api_call_url'      => 'api call url',
-    '123_access_url'        => 'https://demo3.2c2p.com/123MM/Payment/Pay/Slip'
+    '123_access_url'        => 'https://demo3.2c2p.com/123MM/Payment/Pay/Slip',
 ];

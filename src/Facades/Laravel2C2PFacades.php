@@ -16,4 +16,5 @@ class Laravel2C2PFacades extends Facade
         return '2c2p-payment-gateway-api';
     }
 
+
 }

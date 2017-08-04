@@ -16,4 +16,5 @@ class EncryptionFacades extends Facade
         return '2c2p-encryption';
     }
 
+
 }
