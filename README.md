@@ -185,7 +185,7 @@ Submit the Payment Request:
             'invoice_no' => 'ZXCQW123',
             'currency' => '840',
             'amount' => '000001100010',
-            'customer_email' => 'nyi.nl@blueplanet.com.mm',
+            'customer_email' => 'email@email.com',
             'result_url_1' => 'http://127.0.0.1:8888/payment/complete'
     ]) !!}
     <button type="submit">Submit</button>
