@@ -1,5 +1,6 @@
 # Laravel 2C2P Redirect API , Payment Gateway Api & 123 Api
 
+[![StyleCI](https://styleci.io/repos/98979571/shield?branch=master)](https://styleci.io/repos/98979571)
 [![Latest Stable Version](https://poser.pugx.org/php-junior/laravel-2c2p/v/stable)](https://packagist.org/packages/php-junior/laravel-2c2p)
 [![Total Downloads](https://poser.pugx.org/php-junior/laravel-2c2p/downloads)](https://packagist.org/packages/php-junior/laravel-2c2p)
 
