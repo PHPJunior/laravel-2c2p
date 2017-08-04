@@ -19,7 +19,7 @@ class Laravel2C2PServiceProvider extends ServiceProvider
     {
         $this->publishes([
             $this->configPath()      => config_path('laravel-2c2p.php'),
-            $this->certificatePath() => storage_path('cert')
+            $this->certificatePath() => storage_path('cert'),
         ]);
     }
 

@@ -25,7 +25,7 @@ class Encryption
 
     public function pkcs7_123_encrypt($text)
     {
-        if(!file_exists(storage_path('tmp/'))) {
+        if (!file_exists(storage_path('tmp/'))) {
             mkdir( storage_path('tmp/') );
         }
 
@@ -33,7 +33,7 @@ class Encryption
         $enc_file = storage_path('tmp/enc.txt');
         $dec_file = storage_path('tmp/dec.txt');
 
-        file_put_contents( $msg_file , $text );
+        file_put_contents($msg_file, $text);
 
         $strOri = 'MIME-Version: 1.0
 Content-Disposition: attachment; filename="smime.p7m"
@@ -47,9 +47,9 @@ Content-Transfer-Encoding: base64
 
             $tempStr = file_get_contents($enc_file);
             $pos = strpos($tempStr, 'base64');
-            $tempStr=trim(substr($tempStr,$pos+6));
+            $tempStr = trim(substr($tempStr,$pos+6));
 
-            return str_replace($strOri,'',$tempStr);
+            return str_replace($strOri, '',$tempStr);
         } else {
             return 'Cannot Encrypt';
         }
@@ -63,8 +63,8 @@ Content-Transfer-Encoding: base64
      */
     public function pkcs7_encrypt($text)
     {
-        if(!file_exists(storage_path('tmp/'))) {
-            mkdir( storage_path('tmp/') );
+        if (!file_exists(storage_path('tmp/'))) {
+            mkdir(storage_path('tmp/'));
         }
 
         $filename = storage_path('tmp/'.time().'.txt');
@@ -86,9 +86,9 @@ Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7m"
 Content-Type: application/pkcs7-mime; smime-type=enveloped-data; name="smime.p7m"
 Content-Transfer-Encoding: base64
-',"", $contents );
+', '', $contents );
 
-            $contents = str_replace("\n",'',$contents);
+            $contents = str_replace("\n", '',$contents);
             unlink($filename_enc);
             return $contents;
         } else {
@@ -97,6 +97,7 @@ Content-Transfer-Encoding: base64
             echo 'ENCRYPT FAIL';
             exit;
         }
+
     }
 
     public function pkcs7_decrypt($text)
@@ -104,7 +105,7 @@ Content-Transfer-Encoding: base64
         $arr = str_split($text, 64);
         $text = '';
 
-        foreach($arr as $val) {
+        foreach ($arr as $val) {
             $text .= $val."\n";
         }
 
@@ -117,8 +118,7 @@ Content-Transfer-Encoding: base64
 
         $text = rtrim($text, "\n");
 
-        if(!file_exists(storage_path('tmp/')))
-        {
+        if (!file_exists(storage_path('tmp/'))) {
             mkdir( storage_path('tmp/') );
         }
 
@@ -143,6 +143,7 @@ Content-Transfer-Encoding: base64
             echo 'DECRYPT FAIL';
             exit;
         }
+        
     }
 
     private function text_to_file($text, $filename)

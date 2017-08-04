@@ -17,4 +17,5 @@ class Laravel2C2PFacades extends Facade
     }
 
 
+
 }
