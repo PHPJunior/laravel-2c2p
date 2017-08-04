@@ -72,6 +72,8 @@ class PaymentGatewayApi
         $string .= '<input type="hidden" name="version" value="'.$version.'">';
         $string .= '<input type="hidden" name="merchant_id" value="'.$merchantID.'">';
 
+        $input['amount'] = $this->amount($input['amount']);
+        
         foreach ($input as $key => $value) {
             $strSignatureString .= $value;
             $string .= '<input type="hidden" name="'.$key.'" value="'.$value.'">';
