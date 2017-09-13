@@ -24,5 +24,12 @@
         "psr-4": {
             "PhpJunior\\Laravel2C2P\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PhpJunior\\Laravel2C2P\\Laravel2C2PServiceProvider"
+            ]
+        }
     }
 }

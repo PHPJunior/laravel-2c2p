@@ -2,6 +2,7 @@
 
 namespace PhpJunior\Laravel2C2P\Api;
 
+use Carbon\Carbon;
 use PhpJunior\Laravel2C2P\Encryption\Encryption;
 
 class PaymentGatewayApi
@@ -149,6 +150,74 @@ class PaymentGatewayApi
         return $this->encryption->pkcs7_123_encrypt($xml);
     }
 
+    /**
+     * @param array $input
+     * @param $type
+     * @return string
+     */
+    public function quickPayRequest(array $input , $type)
+    {
+        $array = $this->getQuickPayRequestMessage($input);
+        switch ($type) {
+            case 'generate' :
+                $requestMsg['GenerateQPReq'] = $array;
+                break;
+
+            case 'generate-send' :
+                $requestMsg['GenerateSendQPReq'] = $array;
+                break;
+
+            case 'send-url' :
+                $requestMsg['QPSendReq'] = $array;
+                break;
+
+            case 'update' :
+                $requestMsg['QPUpdateReq'] = $array;
+                break;
+
+            case 'delete' :
+                $requestMsg['QPDeleteReq'] = $array;
+                break;
+
+            default :
+                $requestMsg['QPQueryReq'] = $array;
+                break;
+        }
+        return base64_encode(json_encode($requestMsg));
+    }
+
+    /**
+     * @param array $input
+     * @return array
+     */
+    private function getQuickPayRequestMessage(array $input)
+    {
+        $secretKey = $this->config->get('laravel-2c2p.secret_key');
+        $merchantID = $this->config->get('laravel-2c2p.merchant_id');
+        $version = '2.0';
+        $timeStamp = Carbon::now()->format('YmdHis');
+        $stringToHash = $version . $timeStamp . $merchantID;
+
+        $array = [
+            'version' => $version,
+            'timeStamp' => $timeStamp,
+            'merchantID' => $merchantID
+        ];
+
+        foreach ($input as $key => $value) {
+            $stringToHash .= $value;
+            $array = array_add($array, $key, $value);
+        }
+
+        $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));
+        $array = array_add($array, 'hashValue', $hash);
+        return $array;
+    }
+
+    /**
+     * @param $text
+     * @return \SimpleXMLElement
+     */
     public function getData($text)
     {
         $response = $this->encryption->pkcs7_decrypt($text);

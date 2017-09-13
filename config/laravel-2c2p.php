@@ -26,4 +26,8 @@ return [
     '123_merchant_url'      => 'merchant url',
     '123_api_call_url'      => 'api call url',
     '123_access_url'        => 'https://demo3.2c2p.com/123MM/Payment/Pay/Slip',
+
+    //QuickPay
+    'direct_api' => 'http://demo2.2c2p.com/2C2PFrontEnd/QuickPay/DirectAPI',
+    'delivery_api' => 'http://demo2.2c2p.com/2C2PFrontEnd/QuickPay/DeliveryAPI'
 ];

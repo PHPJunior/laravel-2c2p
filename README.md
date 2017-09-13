@@ -56,6 +56,10 @@ return [
     '123_merchant_url' => 'merchant url',
     '123_api_call_url' => 'api call url',
     '123_access_url' => 'https://demo3.2c2p.com/123MM/Payment/Pay/Slip'
+
+    //QuickPay 
+    'direct_api' => 'http://demo2.2c2p.com/2C2PFrontEnd/QuickPay/DirectAPI',
+    'delivery_api' => 'http://demo2.2c2p.com/2C2PFrontEnd/QuickPay/DeliveryAPI'
 ];
 ```
 
@@ -195,11 +199,195 @@ Submit the Payment Request:
 </form>
 ```
 
+## QuickPay for Card Payments
+
+QuickPay for Card Payments offers the following options
+- QuickPay Direct API - Generate a new QuickPay URL, Merchant to deliver URL to customer (aka white label)
+- QuickPay Delivery API - Generate and Send a QuickPay URL to an eMail or mobile phone
+
+#### QuickPay Request [ Using Direct API ]
+```php
+    $requestMsg = Payment2C2P::quickPayRequest([
+        'orderIdPrefix' => 'QP-zzzz2202',
+        'description' => 'asasas',
+        'currency' => 'USD',
+        'amount' => '10',
+        'allowMultiplePayment' => 'N',
+        'expiry' => '16092017',
+        'resultUrl1' => 'http://61.91.121.190/2c2pfrontend/uat/demomerchant/v3uifrontendurl.aspx', //	Front end return URL
+        'resultUrl2' => 'http://61.91.121.190/2c2pfrontend/uat/demomerchant/v3uibackendurl.aspx',  //	Back end return URL
+    ], 'generate' );
+
+     $curl = curl_init();
+     curl_setopt_array($curl, array(
+       CURLOPT_URL => config('laravel-2c2p.direct_api'),
+       CURLOPT_RETURNTRANSFER => true,
+       CURLOPT_POSTFIELDS => $requestMsg,
+     ));
+
+     $response = curl_exec($curl);
+     $err = curl_error($curl);
+    
+     curl_close($curl);
+    
+     if ($err) {
+       dd("cURL Error #:" . $err);
+     } else {
+       dd(base64_decode($response)) ;
+     }
+```
+
+#### QuickPay Request [ Using Delivery API ]
+```php
+    $requestMsg = Payment2C2P::quickPayRequest([
+        'orderIdPrefix' => 'QP-zzzz2202',
+        'description' => 'asasas',
+        'currency' => 'USD',
+        'amount' => '10',
+        'allowMultiplePayment' => 'N',
+        'expiry' => '16092017',
+        'resultUrl1' => 'http://61.91.121.190/2c2pfrontend/uat/demomerchant/v3uifrontendurl.aspx', //	Front end return URL
+        'resultUrl2' => 'http://61.91.121.190/2c2pfrontend/uat/demomerchant/v3uibackendurl.aspx',  //	Back end return URL
+        'toEmails' => 'email@email.com',
+        'emailSubject' => 'Email Subject',
+        'emailMessage' => 'Message'
+    ], 'generate-send' );
+
+     $curl = curl_init();
+     curl_setopt_array($curl, array(
+       CURLOPT_URL => config('laravel-2c2p.delivery_api'),
+       CURLOPT_RETURNTRANSFER => true,
+       CURLOPT_POSTFIELDS => $requestMsg,
+     ));
+
+     $response = curl_exec($curl);
+     $err = curl_error($curl);
+    
+     curl_close($curl);
+    
+     if ($err) {
+       dd("cURL Error #:" . $err);
+     } else {
+       dd(base64_decode($response)) ;
+     }
+```
+
+Send an existing Quickpay URL to an email or mobile phone.
+
+```php
+    $requestMsg = Payment2C2P::quickPayRequest([
+        'qpID' => '121212',
+        'toEmails' => 'email@email.com',
+        'emailSubject' => 'Email Subject',
+        'emailMessage' => 'Message'
+    ], 'send-url' );
+
+     $curl = curl_init();
+     curl_setopt_array($curl, array(
+       CURLOPT_URL => config('laravel-2c2p.delivery_api'),
+       CURLOPT_RETURNTRANSFER => true,
+       CURLOPT_POSTFIELDS => $requestMsg,
+     ));
+
+     $response = curl_exec($curl);
+     $err = curl_error($curl);
+    
+     curl_close($curl);
+    
+     if ($err) {
+       dd("cURL Error #:" . $err);
+     } else {
+       dd(base64_decode($response)) ;
+     }
+```
+
+QuickPay Query - allows to check the status of an existing QuickPay transaction
+
+```php
+    $requestMsg = Payment2C2P::quickPayRequest([
+        'qpID' => '12122',
+    ], 'check' );
+
+     $curl = curl_init();
+     curl_setopt_array($curl, array(
+       CURLOPT_URL => config('laravel-2c2p.direct_api'),
+       CURLOPT_RETURNTRANSFER => true,
+       CURLOPT_POSTFIELDS => $requestMsg,
+     ));
+
+     $response = curl_exec($curl);
+     $err = curl_error($curl);
+    
+     curl_close($curl);
+    
+     if ($err) {
+       dd("cURL Error #:" . $err);
+     } else {
+       dd(base64_decode($response)) ;
+     }
+```
+
+QuickPay Update - allows a modification of an existing QuickPay transaction
+
+```php
+    $requestMsg = Payment2C2P::quickPayRequest([
+        'qpID' => '1212',
+        'description' => 'asasas',
+        'currency' => 'USD',
+        'amount' => '10',
+    ], 'update' );
+
+     $curl = curl_init();
+     curl_setopt_array($curl, array(
+       CURLOPT_URL => config('laravel-2c2p.direct_api'),
+       CURLOPT_RETURNTRANSFER => true,
+       CURLOPT_POSTFIELDS => $requestMsg,
+     ));
+
+     $response = curl_exec($curl);
+     $err = curl_error($curl);
+    
+     curl_close($curl);
+    
+     if ($err) {
+       dd("cURL Error #:" . $err);
+     } else {
+       dd(base64_decode($response)) ;
+     }
+```
+
+QuickPay Delete - allows deletion of an existing QuickPay transaction
+
+```php
+    $requestMsg = Payment2C2P::quickPayRequest([
+        'qpID' => '121212',
+    ], 'delete' );
+
+     $curl = curl_init();
+     curl_setopt_array($curl, array(
+       CURLOPT_URL => config('laravel-2c2p.direct_api'),
+       CURLOPT_RETURNTRANSFER => true,
+       CURLOPT_POSTFIELDS => $requestMsg,
+     ));
+
+     $response = curl_exec($curl);
+     $err = curl_error($curl);
+    
+     curl_close($curl);
+    
+     if ($err) {
+       dd("cURL Error #:" . $err);
+     } else {
+       dd(base64_decode($response)) ;
+     }
+```
+
 ## Api Variables
 
 - Redirect Api variable from [here](https://developer.2c2p.com/docs/redirect-variables).
 - Payment Gateway Api variable from [here](https://developer.2c2p.com/docs/api-variables).
 - 123 Api from [here](https://developer.2c2p.com/docs/123-payments-123)
+- QuickPay variable from [here](https://developer.2c2p.com/docs/quickpay-variables-1)
 
 ## Full Documentation
 
