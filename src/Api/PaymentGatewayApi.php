@@ -153,41 +153,44 @@ class PaymentGatewayApi
     /**
      * @param array $input
      * @param $type
+     *
      * @return string
      */
-    public function quickPayRequest(array $input , $type)
+    public function quickPayRequest(array $input, $type)
     {
         $array = $this->getQuickPayRequestMessage($input);
         switch ($type) {
-            case 'generate' :
+            case 'generate':
                 $requestMsg['GenerateQPReq'] = $array;
                 break;
 
-            case 'generate-send' :
+            case 'generate-send':
                 $requestMsg['GenerateSendQPReq'] = $array;
                 break;
 
-            case 'send-url' :
+            case 'send-url':
                 $requestMsg['QPSendReq'] = $array;
                 break;
 
-            case 'update' :
+            case 'update':
                 $requestMsg['QPUpdateReq'] = $array;
                 break;
 
-            case 'delete' :
+            case 'delete':
                 $requestMsg['QPDeleteReq'] = $array;
                 break;
 
-            default :
+            default:
                 $requestMsg['QPQueryReq'] = $array;
                 break;
         }
+
         return base64_encode(json_encode($requestMsg));
     }
 
     /**
      * @param array $input
+     *
      * @return array
      */
     private function getQuickPayRequestMessage(array $input)
@@ -196,12 +199,12 @@ class PaymentGatewayApi
         $merchantID = $this->config->get('laravel-2c2p.merchant_id');
         $version = '2.0';
         $timeStamp = Carbon::now()->format('YmdHis');
-        $stringToHash = $version . $timeStamp . $merchantID;
+        $stringToHash = $version.$timeStamp.$merchantID;
 
         $array = [
-            'version' => $version,
-            'timeStamp' => $timeStamp,
-            'merchantID' => $merchantID
+            'version'    => $version,
+            'timeStamp'  => $timeStamp,
+            'merchantID' => $merchantID,
         ];
 
         foreach ($input as $key => $value) {
@@ -211,11 +214,13 @@ class PaymentGatewayApi
 
         $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));
         $array = array_add($array, 'hashValue', $hash);
+
         return $array;
     }
 
     /**
      * @param $text
+     *
      * @return \SimpleXMLElement
      */
     public function getData($text)
