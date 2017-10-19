@@ -398,3 +398,8 @@ Read Full Documentation [here](https://developer.2c2p.com/docs)
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/PHPJunior/laravel-2c2p/badge.svg?style=beer-square)](https://beerpay.io/PHPJunior/laravel-2c2p)  [![Beerpay](https://beerpay.io/PHPJunior/laravel-2c2p/make-wish.svg?style=flat-square)](https://beerpay.io/PHPJunior/laravel-2c2p?focus=wish)
